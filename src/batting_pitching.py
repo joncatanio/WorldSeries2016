@@ -17,17 +17,30 @@ def playerVsPitcher(content, game, team, player, pitcher):
 
    getcontext().prec = 3
    if int(info['ab']) >= 20:
-      if Decimal(info['avg']) > Decimal('.350'):
+      if Decimal(info['avg']) > Decimal('.290'):
          if team.get('id') == game['home']:
             game['rank_factors']['home'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ' against today\'s pitcher.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
             })
          else:
             game['rank_factors']['away'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ' against today\'s pitcher.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
             })
+   elif int(info['ab']) >= 10:
+      if Decimal(info['avg']) > Decimal('.300'):
+         if team.get('id') == game['home']:
+            game['rank_factors']['home'].append({
+               'title': 'You\'re My Favorite',
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+            })
+         else:
+            game['rank_factors']['away'].append({
+               'title': 'You\'re My Favorite',
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+            })
+      
 
    return Decimal(info['avg'])
 
@@ -71,6 +84,30 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
                'verbiage': 'The ' + game['away_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
             })
 
+def pitcherHeadToHead(game, homeP, awayP):
+   getcontext().prec = 2
+   homeEra = Decimal(homeP.get('era'))
+   awayEra = Decimal(awayP.get('era'))
+   homeWL = int(homeP.get('wins')) + int(homeP.get('losses'))
+   awayWL = int(awayP.get('wins')) + int(awayP.get('losses'))
+   duel = False
+
+   if homeWL >= 2:
+      if homeEra < Decimal('2.20'):
+         duel = True
+         game['rank_factors']['home'].append({
+            'title': 'Low ERA Pitcher',
+            'verbiage': homeP.get('first') + ' ' + homeP.get('last') + ' has a ' + str(homeEra) + ' ERA'
+         })
+   if awayWL >= 2:
+      if awayEra < Decimal('2.20'):
+         game['rank_factors']['away'].append({
+            'title': 'Low ERA Pitcher',
+            'verbiage': awayP.get('first') + ' ' + awayP.get('last') + ' has a ' + str(awayEra) + ' ERA'
+         })
+         if duel:
+            game['taglines'].append('Pitcher\'s Duel')
+
 def getPitchAndAvgData(content):
    # For adding batting averages 
    getcontext().prec = 3
@@ -95,6 +132,7 @@ def getPitchAndAvgData(content):
                else:
                   homeP = player
 
+      pitcherHeadToHead(game, homeP, awayP)
       game['away_pitcher'] = awayP.get('first') + ' ' + awayP.get('last')
       game['home_pitcher'] = homeP.get('first') + ' ' + homeP.get('last')
 
