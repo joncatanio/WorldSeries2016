@@ -25,7 +25,7 @@ def getStandingsComparison(content):
                back = ' games back'
             game['rank_factors']['home'].append({
                'title': 'Closing In',
-               'verbiage': 'The ' + homeName + ' are currently ' + str(homeGB) + back
+               'verbiage': 'The ' + homeName + ' are currently ' + str(homeGB) + back + ' from 1st place'
             })
          
          if awayGB != '-' and awayGB != '' and awayGB < GB_THRESHOLD:
@@ -35,7 +35,7 @@ def getStandingsComparison(content):
                back = ' games back'
             game['rank_factors']['away'].append({
                'title': 'Closing In',
-               'verbiage': 'The ' + homeName + ' are currently ' + str(awayGB) +back
+               'verbiage': 'The ' + homeName + ' are currently ' + str(awayGB) + back + ' from 1st place'
             })
          if homeGB_wildcard != '-' and homeGB_wildcard != '' and homeGB_wildcard < GB_THRESHOLD:
             if homeGB_wildcard == 1.0:
