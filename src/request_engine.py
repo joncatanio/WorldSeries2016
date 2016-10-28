@@ -20,7 +20,7 @@ def getGames(content, date):
                      'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
                      'game_data_dir': obj['game_data_directory'],
                      'home_name': obj['home_team_name'], 'away_name': obj['away_team_name'],
-                     'rank_factors': { 'home': [], 'away': []}})
+                     'rank_factors': { 'home': [], 'away': []}, 'est_time': obj['time']})
 
 # Called by getPitchAndAvgData to determine if a player is very good against a pitcher
 def playerVsPitcher(content, game, team, player, pitcher):
@@ -82,12 +82,12 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
          if team.get('id') == game['home']:
             game['rank_factors']['home'].append({
                'title': 'Our Favorite Pitcher',
-               'verbiage': 'The ' + game['home_name'] + ' hit ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
+               'verbiage': 'The ' + game['home_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
             })
          else:
             game['rank_factors']['away'].append({
                'title': 'Our Favorite Pitcher',
-               'verbiage': 'The ' + game['away_name'] + ' hit ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
+               'verbiage': 'The ' + game['away_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
             })
 
 def getPitchAndAvgData(content):
@@ -186,27 +186,27 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
       if homeStreakType == 'W':
          if int(homeStreakNum) >= WIN_STREAK:
             game['rank_factors']['home'].append(
-               {'title': 'streak',
-                'verbiage': game['home'] + ' has a winning streak of ' + homeStreakNum + ', will it continue?!'}
+               {'title': 'Winning Streak',
+                'verbiage': 'The ' + game['home_name'] + ' have a winning streak of ' + homeStreakNum + ', will it continue?!'}
                )
       else:
          if int(homeStreakNum) >= LOSE_STREAK:
             game['rank_factors']['home'].append(
-               {'title': 'streak',
-                'verbiage': game['home'] + ' has a losing streak of ' + homeStreakNum + ', will they break it?'}
+               {'title': 'Losing Streak',
+                'verbiage': 'The ' + game['home_name'] + ' have a losing streak of ' + homeStreakNum + ', will they break it?'}
                )
 
       if awayStreakType == 'W':
          if int(awayStreakNum) >= WIN_STREAK:
             game['rank_factors']['away'].append(
-               {'title': 'streak',
-                'verbiage': game['away'] + ' has a winning streak of ' + awayStreakNum + ', will it continue?!'}
+               {'title': 'Winning Streak',
+                'verbiage': 'The ' + game['away_name'] + ' have a winning streak of ' + awayStreakNum + ', will it continue?!'}
                )
       else: 
          if int(awayStreakNum) >= LOSE_STREAK:
             game['rank_factors']['away'].append(
-               {'title': 'streak',
-                'verbiage': game['away'] + ' has a losing streak of ' + awayStreakNum + ', will they break it?'}
+               {'title': 'Losing Streak',
+                'verbiage': 'The ' + game['away_name'] + ' have a losing streak of ' + awayStreakNum + ', will they break it?'}
                )
  
 def getStreak(homeID, awayID, standingsNL, standingsAL, content):
