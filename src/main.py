@@ -1,9 +1,12 @@
 from datetime import date
-import request_engine
+from request_engine import buildAppContent
+from content_save import save_content
 
 def main():
-   curDate = date(2016, 8, 21)
-   appContent = request_engine.buildAppContent(curDate)
+   curDate = date(2016, 6, 17)
+   appContent = buildAppContent(curDate)
    print(appContent)
+
+   save_content('../../WorldSeries2016_API/' + curDate.isoformat() + '.txt', appContent)
 
 main()
