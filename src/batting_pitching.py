@@ -104,8 +104,14 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
 def pitcherHeadToHead(game, homeP, awayP):
    tempPrec = getcontext().prec
    getcontext().prec = 2
-   homeEra = Decimal(homeP.get('era'))
-   awayEra = Decimal(awayP.get('era'))
+   if homeP.get('era') == '-':
+      homeEra = Decimal(0.00)
+   else:
+      homeEra = Decimal(homeP.get('era'))
+   if awayP.get('era') == '-':
+      awayEra = Decimal(0.00)
+   else:
+      awayEra = Decimal(awayP.get('era'))
    homeWL = int(homeP.get('wins')) + int(homeP.get('losses'))
    awayWL = int(awayP.get('wins')) + int(awayP.get('losses'))
    duel = False
