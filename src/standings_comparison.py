@@ -37,7 +37,7 @@ def getStandingsComparison(content):
             game['rank_factors']['away'].append({
                'title': 'Closing In',
                'verbiage': 'The ' + homeName + ' are currently ' + str(awayGB) + back + ' from 1st place',
-               'rank' : '3'
+               'rank': '3'
             })
          if homeGB_wildcard != '-' and homeGB_wildcard != '' and homeGB_wildcard < GB_THRESHOLD:
             if homeGB_wildcard == 1.0:
@@ -47,7 +47,7 @@ def getStandingsComparison(content):
             game['rank_factors']['home'].append({
                'title': 'Postseason Potential',
                'verbiage': 'The ' + homeName + ' are ' + str(homeGB_wildcard) + back + ' from a wildcard spot',
-               'rank' : '6'
+               'rank': '6'
             })
          if awayGB_wildcard != '-' and awayGB_wildcard != '' and awayGB_wildcard < GB_THRESHOLD:
             if awayGB_wildcard == 1.0:
@@ -56,8 +56,8 @@ def getStandingsComparison(content):
                back = ' games back'
             game['rank_factors']['away'].append({
                'title': 'Postseason Potential',
-               'verbiage': 'The ' + homeName + ' are ' + str(awayGB_wildcard) + back + ' from a wildcard spot'
-               'rank' : '6'
+               'verbiage': 'The ' + homeName + ' are ' + str(awayGB_wildcard) + back + ' from a wildcard spot',
+               'rank': '6'
             })
 
 

@@ -7,6 +7,6 @@ def main():
    appContent = buildAppContent(curDate)
    print(appContent)
 
-   save_content('../../WorldSeries2016_API/' + curDate.isoformat() + '.txt', appContent)
+   save_content('../../WorldSeries2016_API/datastore/' + curDate.isoformat() + '.txt', appContent)
 
 main()

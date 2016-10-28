@@ -24,24 +24,28 @@ def playerVsPitcher(content, game, team, player, pitcher):
          if team.get('id') == game['home']:
             game['rank_factors']['home'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.',
+               'rank': '2'
             })
          else:
             game['rank_factors']['away'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.',
+               'rank': '2'
             })
    elif int(info['ab']) >= 10:
       if Decimal(info['avg']) > Decimal('.300'):
          if team.get('id') == game['home']:
             game['rank_factors']['home'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.',
+               'rank': '2'
             })
          else:
             game['rank_factors']['away'].append({
                'title': 'You\'re My Favorite',
-               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.'
+               'verbiage': info['player_first_last_html'] + ' is batting ' + info['avg'] + ', in ' + info['ab'] + ' at bats, against ' + info['pitcher_first_last_html'] + '.',
+               'rank': '2'
             })
       
 
@@ -55,13 +59,17 @@ def teamAvgThisYear(game, team, avg):
       if team.get('id') == game['home']:
          game['rank_factors']['home'].append({
             'title': 'High Average!',
-            'verbiage': 'The ' + game['home_name'] + ' have a batting average of ' + str(teamAvg)
+            'verbiage': 'The ' + game['home_name'] + ' have a batting average of ' + str(teamAvg),
+            'rank': '3'
          })
       else:
          game['rank_factors']['away'].append({
             'title': 'High Average!',
-            'verbiage': 'The ' + game['away_name'] + ' have a batting average of ' + str(teamAvg)
+            'verbiage': 'The ' + game['away_name'] + ' have a batting average of ' + str(teamAvg),
+            'rank': '3'
          })
+      if len(game['taglines']) < 3 and ('Sluggers' not in game['taglines']):
+         game['taglines'].append('Sluggers')
 
 def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
    if faced > 4:
@@ -70,23 +78,27 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
          if team.get('id') == game['home']:
             game['rank_factors']['away'].append({
                'title': 'Dominant Pitcher',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['home_name'] + ' to a team batting average of ' + str(avgAgainstP)
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['home_name'] + ' to a team batting average of ' + str(avgAgainstP),
+               'rank': '4'
             })
          else:
             game['rank_factors']['home'].append({
                'title': 'Dominant Pitcher',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['away_name'] + ' to a team batting average of ' + str(avgAgainstP)
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['away_name'] + ' to a team batting average of ' + str(avgAgainstP),
+               'rank': '4'
             })
       if avgAgainstP >= Decimal('0.325'):
          if team.get('id') == game['home']:
             game['rank_factors']['home'].append({
                'title': 'Our Favorite Pitcher',
-               'verbiage': 'The ' + game['home_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
+               'verbiage': 'The ' + game['home_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last'),
+               'rank': '3'
             })
          else:
             game['rank_factors']['away'].append({
                'title': 'Our Favorite Pitcher',
-               'verbiage': 'The ' + game['away_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last')
+               'verbiage': 'The ' + game['away_name'] + ' are hitting ' + str(avgAgainstP) + ' against ' + pitcher.get('first') + ' ' + pitcher.get('last'),
+               'rank': '3'
             })
 
 def pitcherHeadToHead(game, homeP, awayP):
@@ -103,13 +115,15 @@ def pitcherHeadToHead(game, homeP, awayP):
          duel = True
          game['rank_factors']['home'].append({
             'title': 'Low ERA Pitcher',
-            'verbiage': homeP.get('first') + ' ' + homeP.get('last') + ' has a ' + str(homeEra) + ' ERA'
+            'verbiage': homeP.get('first') + ' ' + homeP.get('last') + ' has a ' + str(homeEra) + ' ERA',
+            'rank': '2'
          })
    if awayWL >= 2:
       if awayEra < Decimal('2.20'):
          game['rank_factors']['away'].append({
             'title': 'Low ERA Pitcher',
-            'verbiage': awayP.get('first') + ' ' + awayP.get('last') + ' has a ' + str(awayEra) + ' ERA'
+            'verbiage': awayP.get('first') + ' ' + awayP.get('last') + ' has a ' + str(awayEra) + ' ERA',
+            'rank': '2'
          })
          if duel:
             game['taglines'].append('Pitcher\'s Duel')
@@ -130,12 +144,14 @@ def rightyLeftyMatch(game, team, pitcher, righties, lefties):
          if team.get('type') == 'home':
             game['rank_factors']['away'].append({
                'title': 'Righty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters'
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters',
+               'rank': '1'
             })
          else:
             game['rank_factors']['home'].append({
                'title': 'Righty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters'
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters',
+               'rank': '1'
             })
    elif lefties > righties:
       lhb = player.find('vs_LHB')
@@ -143,12 +159,14 @@ def rightyLeftyMatch(game, team, pitcher, righties, lefties):
          if team.get('type') == 'home':
             game['rank_factors']['away'].append({
                'title': 'Lefty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters'
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters',
+               'rank': '1'
             })
          else:
             game['rank_factors']['home'].append({
                'title': 'Lefty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters'
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters',
+               'rank': '1'
             })
 
 def getPitchAndAvgData(content):
@@ -251,15 +269,18 @@ def getPastFiveGamesData (playerID, playerTeam, game):
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
          'verbiage' : firstName + ' ' + lastName + ' batted ' + monthBatAVG + ' and has hit '
-            + monthHRs + ' homeruns in the last month'
+            + monthHRs + ' homeruns in the last month',
+         'rank': '1'
       })
    elif float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD:
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
-         'verbiage' : firstName + ' '  + lastName + ' batted ' + monthBatAVG + ' in the last month' 
+         'verbiage' : firstName + ' '  + lastName + ' batted ' + monthBatAVG + ' in the last month',
+         'rank': '1'
       }) 
    elif int(monthHRs) >= MONTH_HR_THRESHOLD:
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
-         'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns in the last month' 
+         'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns in the last month',
+         'rank': '1'
       }) 
