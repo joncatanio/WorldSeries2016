@@ -63,12 +63,12 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
       avgAgainstP = avgAgainstP / Decimal(faced)
       if avgAgainstP < Decimal('0.150'):
          if team.get('id') == game['home']:
-            game['rank_factors']['home'].append({
+            game['rank_factors']['away'].append({
                'title': 'Dominant Pitcher',
                'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['home_name'] + ' to a team batting average of ' + str(avgAgainstP)
             })
          else:
-            game['rank_factors']['away'].append({
+            game['rank_factors']['home'].append({
                'title': 'Dominant Pitcher',
                'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' holds the ' + game['away_name'] + ' to a team batting average of ' + str(avgAgainstP)
             })
@@ -107,6 +107,41 @@ def pitcherHeadToHead(game, homeP, awayP):
          })
          if duel:
             game['taglines'].append('Pitcher\'s Duel')
+
+def rightyLeftyMatch(game, team, pitcher, righties, lefties):
+   res = requests.get(mlbEndpoint + game['game_data_dir'] + '/pitchers/' + pitcher.get('id') + '.xml')
+   if res.status_code != requests.codes.ok:
+      res.raise_for_status()
+
+   player = ET.fromstring(res.text)
+   getcontext().prec = 2
+
+   if righties > lefties:
+      rhb = player.find('vs_RHB')
+      if Decimal(rhb.get('era')) < Decimal('2.20'):
+         if team.get('type') == 'home':
+            game['rank_factors']['away'].append({
+               'title': 'Righty Factor',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters'
+            })
+         else:
+            game['rank_factors']['home'].append({
+               'title': 'Righty Factor',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against righty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against right-handed batters'
+            })
+   elif lefties > righties:
+      lhb = player.find('vs_LHB')
+      if Decimal(lhb.get('era')) < Decimal('2.20'):
+         if team.get('type') == 'home':
+            game['rank_factors']['away'].append({
+               'title': 'Lefty Factor',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters'
+            })
+         else:
+            game['rank_factors']['home'].append({
+               'title': 'Lefty Factor',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters'
+            })
 
 def getPitchAndAvgData(content):
    # For adding batting averages 
@@ -151,6 +186,9 @@ def getPitchAndAvgData(content):
          else:
             pitcher = awayP
 
+         # Righty-Lefty matchup
+         righties = 0
+         lefties = 0
          for player in players:
             pos = player.get('game_position')
             starters += 1  
@@ -165,7 +203,16 @@ def getPitchAndAvgData(content):
                      avgAgainstP += tempAvg
                      faced += 1
 
+                  style = player.get('bats')
+                  if style == 'R':
+                     righties += 1
+                  elif style == 'L':
+                     lefties += 1
+
                   avg += Decimal(player.get('avg'))
+
+         # Pitcher against right-handed vs left-handed batters, see which way team bats
+         rightyLeftyMatch(game, team, pitcher, righties, lefties)
 
          # Team average overall (on the season)
          if starters == 9:
