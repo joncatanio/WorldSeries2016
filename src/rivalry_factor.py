@@ -43,12 +43,14 @@ def getRivalries(content):
       if awayTeam in rivalryFactor[homeTeam]:
          game['rank_factors']['home'].append({
             'title': 'Rivalry Game',
-            'verbiage': 'The ' + homeName + ' are rivals with the ' + awayName
+            'verbiage': 'The ' + homeName + ' are rivals with the ' + awayName,
+            'rank' : '4'
          })
       if homeTeam in rivalryFactor[awayTeam]:
          game['rank_factors']['away'].append({
             'title': 'Rivalry Game',
-            'verbiage': 'The ' + awayName + ' are rivals with the ' + homeName
+            'verbiage': 'The ' + awayName + ' are rivals with the ' + homeName,
+            'rank' : '4'
          })
       
       getRivalryTagline(homeTeam, awayTeam, game)
