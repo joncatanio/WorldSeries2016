@@ -36,27 +36,30 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
          if int(homeStreakNum) >= WIN_STREAK:
             game['rank_factors']['home'].append(
                {'title': 'Winning Streak',
-                'verbiage': 'The ' + game['home_name'] + ' have a winning streak of ' + homeStreakNum + ', will it continue?!'}
-               )
+                'verbiage': 'The ' + game['home_name'] + ' have a winning streak of ' + homeStreakNum + ', will it continue?!',
+                'rank' : '1'
+               })
       else:
          if int(homeStreakNum) >= LOSE_STREAK:
             game['rank_factors']['home'].append(
                {'title': 'Losing Streak',
-                'verbiage': 'The ' + game['home_name'] + ' have a losing streak of ' + homeStreakNum + ', will they break it?'}
-               )
-
+                'verbiage': 'The ' + game['home_name'] + ' have a losing streak of ' + homeStreakNum + ', will they break it?',
+                'rank' : '1'
+               })
       if awayStreakType == 'W':
          if int(awayStreakNum) >= WIN_STREAK:
             game['rank_factors']['away'].append(
                {'title': 'Winning Streak',
-                'verbiage': 'The ' + game['away_name'] + ' have a winning streak of ' + awayStreakNum + ', will it continue?!'}
-               )
+                'verbiage': 'The ' + game['away_name'] + ' have a winning streak of ' + awayStreakNum + ', will it continue?!',
+                'rank' : '1'
+               })
       else: 
          if int(awayStreakNum) >= LOSE_STREAK:
             game['rank_factors']['away'].append(
                {'title': 'Losing Streak',
-                'verbiage': 'The ' + game['away_name'] + ' have a losing streak of ' + awayStreakNum + ', will they break it?'}
-               )
+                'verbiage': 'The ' + game['away_name'] + ' have a losing streak of ' + awayStreakNum + ', will they break it?',
+                'rank' : '1'
+               })
  
 def getStreak(homeID, awayID, standingsNL, standingsAL, content):
    rootNL = ET.fromstring(standingsNL.text)
