@@ -17,7 +17,9 @@ def getGames(content, date):
                      'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
                      'game_data_dir': obj['game_data_directory'],
                      'home_name': obj['home_team_name'], 'away_name': obj['away_team_name'],
-                     'rank_factors': { 'home': [], 'away': []}, 'est_time': obj['time']})
+                     'rank_factors': { 'home': [], 'away': []}, 'est_time': obj['time'],
+                     'home_win': obj['home_win'], 'home_loss': obj['home_loss'],
+                     'away_win': obj['away_win'], 'away_loss': obj['away_loss']})
 
 
 def buildAppContent(date):
