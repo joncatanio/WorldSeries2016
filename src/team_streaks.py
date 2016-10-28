@@ -39,6 +39,8 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
                 'verbiage': 'The ' + game['home_name'] + ' have a winning streak of ' + homeStreakNum + ', will it continue?!',
                 'rank' : '1'
                })
+            if 'Streak' not in game['taglines'] and len(game['taglines']) < 3:
+               game['taglines'].append('Streak')
       else:
          if int(homeStreakNum) >= LOSE_STREAK:
             game['rank_factors']['home'].append(
@@ -46,6 +48,9 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
                 'verbiage': 'The ' + game['home_name'] + ' have a losing streak of ' + homeStreakNum + ', will they break it?',
                 'rank' : '1'
                })
+            if 'Streak' not in game['taglines'] and len(game['taglines']) < 3:
+               game['taglines'].append('Streak')
+
       if awayStreakType == 'W':
          if int(awayStreakNum) >= WIN_STREAK:
             game['rank_factors']['away'].append(
@@ -53,6 +58,8 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
                 'verbiage': 'The ' + game['away_name'] + ' have a winning streak of ' + awayStreakNum + ', will it continue?!',
                 'rank' : '1'
                })
+            if 'Streak' not in game['taglines'] and len(game['taglines']) < 3:
+               game['taglines'].append('Streak')
       else: 
          if int(awayStreakNum) >= LOSE_STREAK:
             game['rank_factors']['away'].append(
@@ -60,7 +67,9 @@ def isStreak(homeStreakType, homeStreakNum, awayStreakType, awayStreakNum, game)
                 'verbiage': 'The ' + game['away_name'] + ' have a losing streak of ' + awayStreakNum + ', will they break it?',
                 'rank' : '1'
                })
- 
+            if 'Streak' not in game['taglines'] and len(game['taglines']) < 3:
+               game['taglines'].append('Streak')
+
 def getStreak(homeID, awayID, standingsNL, standingsAL, content):
    rootNL = ET.fromstring(standingsNL.text)
    rootAL = ET.fromstring(standingsAL.text)
