@@ -48,16 +48,16 @@ def getRivalries(content):
             'verbiage': 'The ' + homeName + ' are rivals with the ' + awayName,
             'rank' : '4'
          })
-         if 'Top Rivalry' not in game['taglines'] and 'Rivales' not in game['taglines'] and len(game['taglines']) < 3:
-            game['taglines'].append('Rivales')
+         if 'Top Rivalry' not in game['taglines'] and 'Rivals' not in game['taglines'] and len(game['taglines']) < 3:
+            game['taglines'].append('Rivals')
       if homeTeam in rivalryFactor[awayTeam]:
          game['rank_factors']['away'].append({
             'title': 'Rivalry Game',
             'verbiage': 'The ' + awayName + ' are rivals with the ' + homeName,
             'rank' : '4'
          })
-         if 'Top Rivalry' not in game['taglines'] and 'Rivales' not in game['taglines'] and len(game['taglines']) < 3:
-            game['taglines'].append('Rivales')
+         if 'Top Rivalry' not in game['taglines'] and 'Rivals' not in game['taglines'] and len(game['taglines']) < 3:
+            game['taglines'].append('Rivals')
 
 def getRivalryTagline(homeTeam, awayTeam, game):
    if homeTeam == rivalryFactor[awayTeam][0] and awayTeam == rivalryFactor[homeTeam][0]:
