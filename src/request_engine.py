@@ -1,4 +1,5 @@
 import requests, json, xml
+from xml.dom.minidom import parseString as xmlParseStrin
 
 mlbEndpoint = 'http://gd.mlb.com'
 
@@ -16,4 +17,8 @@ def getGames(date):
 
    return games
 
-
+def getTeamBatAvg(games):
+   for game in games:
+      players = requests.get(mlbEndpoint + game['game_data_dir'] + '/players.xml')
+      players = xmlParseString(players.text)
+      
