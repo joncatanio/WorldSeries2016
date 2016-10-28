@@ -3,6 +3,9 @@ import xml.etree.ElementTree as ET
 from decimal import *
 from thresholds_globals import *
 
+MONTH_BAT_AVG_THRESHOLD = .300
+MONTH_HR_THRESHOLD = 5
+
 # Called by getPitchAndAvgData to determine if a player is very good against a pitcher
 def playerVsPitcher(content, game, team, player, pitcher):
    res = requests.get(mlbLookupEndpoint + '/json/named.stats_batter_vs_pitcher_composed.bam?sport_code=\'mlb\'&game_type=\'R\'&player_id=\'' + player.get('id') + '\'&pitcher_id=\'' + pitcher.get('id') + '\'')
@@ -197,6 +200,8 @@ def getPitchAndAvgData(content):
                if pos == 'P':
                   pitcherAvg = Decimal(player.get('avg'))
                else:
+                  # Find Past 5 Game Stats
+                  getPastFiveGamesData(player.get('id'), team.get('type'), game)
                   # The player is a starter (non-pitcher)
                   tempAvg = playerVsPitcher(content, game, team, player, pitcher)
                   if tempAvg != None:
@@ -221,3 +226,34 @@ def getPitchAndAvgData(content):
 
          # Team average vs pitcher
          teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher)
+
+def getPastFiveGamesData (playerID, playerTeam, game):
+   playerStats = requests.get(mlbEndpoint + game['game_data_dir'] + '/batters/' + playerID + '.xml')
+
+   if playerStats.status_code != requests.codes.ok:
+      playerStats.raise_for_status()
+
+   root = ET.fromstring(playerStats.text)
+   month = root.find('month')
+
+   firstName = root.get('first_name')
+   lastName = root.get('last_name')
+   monthBatAVG = month.get('avg')
+   monthHRs = month.get('hr')
+
+   if float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD and int(monthHRs) >= MONTH_HR_THRESHOLD:
+      game['rank_factors'][playerTeam].append({
+         'title': 'Good Month',
+         'verbiage' : firstName + ' ' + lastName + ' batted ' + monthBatAVG + ' and has hit '
+            + monthHRs + ' homeruns in the last month'
+      })
+   elif float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD:
+      game['rank_factors'][playerTeam].append({
+         'title': 'Good Month',
+         'verbiage' : firstName + ' '  + lastName + ' batted ' + monthBatAVG + ' in the last month' 
+      }) 
+   elif int(monthHRs) >= MONTH_HR_THRESHOLD:
+      game['rank_factors'][playerTeam].append({
+         'title': 'Good Month',
+         'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns in the last month' 
+      }) 

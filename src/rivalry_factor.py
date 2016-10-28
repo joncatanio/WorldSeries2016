@@ -50,4 +50,13 @@ def getRivalries(content):
             'title': 'Rivalry Game',
             'verbiage': 'The ' + awayName + ' are rivals with the ' + homeName
          })
-   
+      
+      getRivalryTagline(homeTeam, awayTeam, game)
+
+def getRivalryTagline(homeTeam, awayTeam, game):
+   if homeTeam == rivalryFactor[awayTeam][0] and awayTeam == rivalryFactor[homeTeam][0]:
+      game['taglines'].append('Top Rivalry')  
+   elif homeTeam in rivalryFactor[awayTeam] and awayTeam in rivalryFactor[homeTeam]:
+      game['taglines'].append('Rivalry')
+
+      
