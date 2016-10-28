@@ -19,7 +19,8 @@ def getGames(content, date):
                      'home_name': obj['home_team_name'], 'away_name': obj['away_team_name'],
                      'rank_factors': { 'home': [], 'away': []}, 'est_time': obj['time'],
                      'home_win': obj['home_win'], 'home_loss': obj['home_loss'],
-                     'away_win': obj['away_win'], 'away_loss': obj['away_loss']})
+                     'away_win': obj['away_win'], 'away_loss': obj['away_loss'],
+                     'taglines': []})
 
 
 def buildAppContent(date):
