@@ -274,19 +274,19 @@ def getPastFiveGamesData (playerID, playerTeam, game):
    if float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD and int(monthHRs) >= MONTH_HR_THRESHOLD:
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
-         'verbiage' : firstName + ' ' + lastName + ' batted ' + monthBatAVG + ' and has hit '
-            + monthHRs + ' homeruns in the last month',
+         'verbiage' : firstName + ' ' + lastName + ' is batting ' + monthBatAVG + ' and has '
+            + monthHRs + ' homeruns this month',
          'rank': '1'
       })
    elif float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD:
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
-         'verbiage' : firstName + ' '  + lastName + ' batted ' + monthBatAVG + ' in the last month',
+         'verbiage' : firstName + ' '  + lastName + ' is batting ' + monthBatAVG + ' this month',
          'rank': '1'
       }) 
    elif int(monthHRs) >= MONTH_HR_THRESHOLD:
       game['rank_factors'][playerTeam].append({
          'title': 'Stellar Month',
-         'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns in the last month',
+         'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns this month',
          'rank': '1'
       }) 

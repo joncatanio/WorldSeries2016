@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 from thresholds_globals import *
 
-WIN_STREAK = 2
+WIN_STREAK = 5
 LOSE_STREAK = 4
 
 def getWinLoseStreak(content, date):  
