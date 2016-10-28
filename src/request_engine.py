@@ -10,9 +10,10 @@ def getGames(content, date):
    for obj in jsonGames['game']:
       content.append({ 'home': obj['home_name_abbrev'], 'away': obj['away_name_abbrev'],
                      'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
-                     'game_data_dir': obj['game_data_directory'] })
+                     'game_data_dir': obj['game_data_directory'] },
+                     'rank_factors': { 'home': {}, 'away': {}})
 
-def getPitchersOfGames():
+def getPitchingMatchup():
 
    return
 
