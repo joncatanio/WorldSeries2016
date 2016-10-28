@@ -165,13 +165,13 @@ def rightyLeftyMatch(game, team, pitcher, righties, lefties):
          if team.get('type') == 'home':
             game['rank_factors']['away'].append({
                'title': 'Lefty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['home_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['home_name'] + ' with a ' + lhb.get('era') + ' ERA against left-handed batters',
                'rank': '1'
             })
          else:
             game['rank_factors']['home'].append({
                'title': 'Lefty Factor',
-               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['away_name'] + ' with a ' + rhb.get('era') + ' ERA against left-handed batters',
+               'verbiage': pitcher.get('first') + ' ' + pitcher.get('last') + ' dominates against lefty hitting teams like the ' + game['away_name'] + ' with a ' + lhb.get('era') + ' ERA against left-handed batters',
                'rank': '1'
             })
 
