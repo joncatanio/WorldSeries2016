@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from decimal import *
 from thresholds_globals import *
 
-MONTH_BAT_AVG_THRESHOLD = .300
+MONTH_BAT_AVG_THRESHOLD = .325
 MONTH_HR_THRESHOLD = 5
 
 # Called by getPitchAndAvgData to determine if a player is very good against a pitcher
@@ -243,17 +243,17 @@ def getPastFiveGamesData (playerID, playerTeam, game):
 
    if float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD and int(monthHRs) >= MONTH_HR_THRESHOLD:
       game['rank_factors'][playerTeam].append({
-         'title': 'Good Month',
+         'title': 'Stellar Month',
          'verbiage' : firstName + ' ' + lastName + ' batted ' + monthBatAVG + ' and has hit '
             + monthHRs + ' homeruns in the last month'
       })
    elif float(monthBatAVG) >= MONTH_BAT_AVG_THRESHOLD:
       game['rank_factors'][playerTeam].append({
-         'title': 'Good Month',
+         'title': 'Stellar Month',
          'verbiage' : firstName + ' '  + lastName + ' batted ' + monthBatAVG + ' in the last month' 
       }) 
    elif int(monthHRs) >= MONTH_HR_THRESHOLD:
       game['rank_factors'][playerTeam].append({
-         'title': 'Good Month',
+         'title': 'Stellar Month',
          'verbiage' : firstName + ' '  + lastName + ' has hit ' + monthHRs + ' homeruns in the last month' 
       }) 
