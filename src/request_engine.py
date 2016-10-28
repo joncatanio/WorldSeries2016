@@ -11,12 +11,13 @@ def getGames(content, date):
    for obj in jsonGames['game']:
       content.append({ 'home': obj['home_name_abbrev'], 'away': obj['away_name_abbrev'],
                      'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
-                     'game_data_dir': obj['game_data_directory'] },
-                     'rank_factors': { 'home': {}, 'away': {}})
+                     'game_data_dir': obj['game_data_directory'] ,
+                     'rank_factors': { 'home': {}, 'away': {}}, 'date': date.isoformat()})
 
-def getPitchingMatchup():
+def getPitchingMatchup(content):
+   matchup = []
+   players = requests.get(mlbEndpoint + content['game_data_dir'])
 
-   return
 
 def getTeamBatAvg(games):
    for game in games:
@@ -25,6 +26,6 @@ def getTeamBatAvg(games):
       
 def buildAppContent(date):
    content = []
-   buildGames(content, date)
+   getGames(content, date)
 
    return content
