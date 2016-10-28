@@ -5,6 +5,7 @@ from batting_pitching import getPitchAndAvgData
 from rivalry_factor import getRivalries
 from standings_comparison import getStandingsComparison
 from thresholds_globals import *
+from team_utils import fillTaglines
 
 def getGames(content, date):
    res = requests.get(mlbEndpoint + '/components/game/mlb/year_' + date.strftime('%Y') + '/month_' + date.strftime('%m') + '/day_' + date.strftime('%d') + '/master_scoreboard.json')
@@ -39,5 +40,6 @@ def buildAppContent(date):
    getPitchAndAvgData(content)
    getRivalries(content)
    getStandingsComparison(content)
+   fillTaglines(content)
 
    return content
