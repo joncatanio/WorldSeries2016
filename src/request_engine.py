@@ -2,6 +2,7 @@ import requests, json
 import xml.etree.ElementTree as ET
 from team_streaks import getWinLoseStreak
 from batting_pitching import getPitchAndAvgData
+from rivalry_factor import getRivalries
 from thresholds_globals import *
 
 def getGames(content, date):
@@ -28,5 +29,6 @@ def buildAppContent(date):
    getGames(content, date)
    getWinLoseStreak(content, date)
    getPitchAndAvgData(content)
+   getRivalries(content)
 
    return content
