@@ -48,7 +48,9 @@ def playerVsPitcher(content, game, team, player, pitcher):
    return Decimal(info['avg'])
 
 def teamAvgThisYear(game, team, avg):
+   getcontext().prec = 3
    teamAvg = Decimal(avg) / Decimal(9)
+
    if teamAvg > Decimal('0.300'):
       if team.get('id') == game['home']:
          game['rank_factors']['home'].append({
@@ -64,7 +66,7 @@ def teamAvgThisYear(game, team, avg):
 def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
    if faced > 4:
       avgAgainstP = avgAgainstP / Decimal(faced)
-      if avgAgainstP < Decimal('0.150'):
+      if avgAgainstP < Decimal('0.170'):
          if team.get('id') == game['home']:
             game['rank_factors']['away'].append({
                'title': 'Dominant Pitcher',
@@ -88,6 +90,7 @@ def teamAverageVsPitcher(game, team, faced, avgAgainstP, pitcher):
             })
 
 def pitcherHeadToHead(game, homeP, awayP):
+   tempPrec = getcontext().prec
    getcontext().prec = 2
    homeEra = Decimal(homeP.get('era'))
    awayEra = Decimal(awayP.get('era'))
@@ -110,6 +113,8 @@ def pitcherHeadToHead(game, homeP, awayP):
          })
          if duel:
             game['taglines'].append('Pitcher\'s Duel')
+
+   getcontext().prec = tempPrec
 
 def rightyLeftyMatch(game, team, pitcher, righties, lefties):
    res = requests.get(mlbEndpoint + game['game_data_dir'] + '/pitchers/' + pitcher.get('id') + '.xml')
@@ -182,6 +187,7 @@ def getPitchAndAvgData(content):
          starters = 0
          faced = 0
 
+         getcontext().prec = 3
          # Find the pitcher for playerVsPitcher()
          pitcher = None
          if team.get('type') == 'away':
