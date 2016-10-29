@@ -17,7 +17,23 @@ def getGames(content, date):
 
    month = jsonGames['month']
 
-   for obj in jsonGames['game']:
+   if type(jsonGames['game']) == list:
+      for obj in jsonGames['game']:
+         content.append({ 'home': obj['home_name_abbrev'], 'away': obj['away_name_abbrev'],
+                        'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
+                        'game_data_dir': obj['game_data_directory'],
+                        'home_name': obj['home_team_name'], 'away_name': obj['away_team_name'],
+                        'rank_factors': { 'home': [], 'away': []}, 'est_time': obj['time'],
+                        'home_win': obj['home_win'], 'home_loss': obj['home_loss'],
+                        'away_win': obj['away_win'], 'away_loss': obj['away_loss'],
+                        'home_games_back_wildcard': obj['home_games_back_wildcard'],
+                        'home_games_back': obj['home_games_back'],
+                        'away_games_back_wildcard': obj['away_games_back_wildcard'],
+                        'away_games_back': obj['away_games_back'],
+                        'month': month,
+                        'taglines': []})
+   else:
+      obj = jsonGames['game']
       content.append({ 'home': obj['home_name_abbrev'], 'away': obj['away_name_abbrev'],
                      'home_id': obj['home_team_id'], 'away_id': obj['away_team_id'],
                      'game_data_dir': obj['game_data_directory'],
@@ -31,7 +47,6 @@ def getGames(content, date):
                      'away_games_back': obj['away_games_back'],
                      'month': month,
                      'taglines': []})
-
 
 def buildAppContent(date):
    content = []
