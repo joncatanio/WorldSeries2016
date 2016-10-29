@@ -3,7 +3,7 @@ from request_engine import buildAppContent
 from content_save import save_content
 
 def main():
-   curDate = date(2016, 9, 18)
+   curDate = date(2016, 10, 29)
    appContent = buildAppContent(curDate)
    print(appContent)
 
