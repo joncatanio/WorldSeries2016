@@ -56,7 +56,7 @@ def getStandingsComparison(content):
                back = ' games back'
             game['rank_factors']['away'].append({
                'title': 'Postseason Potential',
-               'verbiage': 'The ' + homeName + ' are ' + str(awayGB_wildcard) + back + ' from a wildcard spot',
+               'verbiage': 'The ' + awayName + ' are ' + str(awayGB_wildcard) + back + ' from a wildcard spot',
                'rank': '6'
             })
 
